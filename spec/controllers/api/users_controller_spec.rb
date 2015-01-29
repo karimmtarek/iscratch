@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe Api::UsersController do
+describe 'users' do
 
   before do
     User.destroy_all

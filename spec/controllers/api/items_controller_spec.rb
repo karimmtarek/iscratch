@@ -1,5 +1,5 @@
 require 'rails_helper'
 
-describe Api::ItemsController do
+describe 'Items' do
   pending # You know what to do
 end

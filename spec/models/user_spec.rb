@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe User do
+describe 'user' do
   describe "authenticate?" do
 
     let(:user) { FactoryGirl.build(:user, password: 'password') }

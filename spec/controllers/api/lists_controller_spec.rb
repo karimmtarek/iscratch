@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe Api::ListsController do
+describe 'lists' do
   describe "create" do
     context "with correct user's password" do
       xit "takes a list name, creates it if it doesn't exist, and returns false if it does"

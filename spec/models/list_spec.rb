@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe List do
+describe 'list' do
 
   let(:list) { FactoryGirl.create(:list) }
 
