@@ -13,6 +13,7 @@ gem 'pry-rails'
 gem 'rack-cors', :require => 'rack/cors'
 
 gem 'devise'
+gem 'simple_token_authentication', '~> 1.0'
 
 
 group :development do
@@ -20,6 +21,7 @@ group :development do
   gem 'spring'
   gem 'guard-rspec', require: false
   gem 'faker'
+  gem "better_errors"
 end
 
 group :test do

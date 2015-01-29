@@ -1,6 +1,6 @@
 FactoryGirl.define do
   factory :list do
     name "Shopping List"
-    permissions "private"
+    # permission "private"
   end
 end
