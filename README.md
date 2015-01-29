@@ -1,1 +1,1 @@
-# iScratch [![Build Status][ci-image]][ci]
+# iScratch
