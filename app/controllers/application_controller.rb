@@ -1,4 +1,13 @@
+require "application_responder"
+
 class ApplicationController < ActionController::API
-  acts_as_token_authentication_handler_for User
+  # include ActionController::MimeResponds
+
+  # include ActionController::RespondWith
+  include ActionController::ImplicitRender
+  include ActionController::StrongParameters
+
+  self.responder = ApplicationResponder
   respond_to :json
+
 end

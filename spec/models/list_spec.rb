@@ -9,6 +9,11 @@ describe 'List' do
     expect(List.all.size).to eq(1)
   end
 
+  it "can't be created if list name exists" do
+    list2 = List.new(name: list.name)
+    expect(list2.valid?).to be_falsy
+  end
+
   it "can't be created, with invalid params" do
     inv_list = List.new
     inv_list.save

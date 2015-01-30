@@ -4,9 +4,10 @@ ruby '2.2.0'
 gem 'rails', '4.2.0'
 
 gem 'rails-api'
+gem 'responders', '~> 2.0'
 
 # To use Jbuilder templates for JSON
-gem 'jbuilder'
+# gem 'jbuilder'
 
 gem 'pry-rails'
 
