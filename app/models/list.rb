@@ -1,5 +1,6 @@
 class List < ActiveRecord::Base
-  has_many :items
+  belongs_to :user
+  has_many :items, dependent: :destroy
   validates :name, presence: true, uniqueness: { case_sensitive: false }
 
   PERMISSION_OPTIONS = ["private", "public", "viewable"]
