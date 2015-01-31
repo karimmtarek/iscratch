@@ -1,6 +1,8 @@
 module API
   module V1
     class ListsController < ApplicationController
+      before_action :authenticate
+
       def index
         @lists = List.all
         respond_with(@lists)
@@ -25,6 +27,12 @@ module API
 
       def list_params
         params.require(:list).permit(:name, :permission)
+      end
+
+      def authenticate
+        authenticate_or_request_with_http_token do |token, options|
+          User.exists?(authentication_token: token)
+        end
       end
 
     end

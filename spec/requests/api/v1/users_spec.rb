@@ -1,30 +1,35 @@
 require 'rails_helper'
 
-describe 'users' do
-
-  before do
-    User.destroy_all
-  end
+describe 'User' do
 
   describe "create" do
-    xit "creates and returns a new user from username and password params" do
-      params = { 'new_user' => { 'username' => 'testuser', 'password' => 'testpass' } }
+    it "creates and returns a new user from email and password params" do
+      user_params = { 'user' => { 'email' => 'testuser', 'password' => 'testpass' } }
 
-      expect{ post :create, params }
-        .to change{ User.where(params['new_user']).count }
-        .by 1
+      post "/v1/users", user_params
 
-      JSON.parse(response.body).should == params['new_user']
+      expect(response.status).to eq 201
+
+      # expect{ post :create, params }
+      #   .to change{ User.all.count }
+      #   .by 1
+
+      # JSON.parse(response.body).should == User.last.authentication_token.to_json
     end
 
-    xit "returns an error when not given a password" do
-      post :create, { username: 'testuser' }
-      response.should be_error
+    it "returns an error when not given a password" do
+      user_params = { 'user' => { 'email' => 'testuser' } }
+
+      post "/v1/users", user_params
+
+      expect(response.status).to eq 400
     end
 
-    xit "returns an error when not given a username" do
-      post :create, { password: 'testpass' }
-      response.should be_error
+    it "returns an error when not given an email" do
+      user_params = { 'user' => { 'password' => 'testuser' } }
+      post "/v1/users", user_params
+
+      expect(response.status).to eq 400
     end
   end
 

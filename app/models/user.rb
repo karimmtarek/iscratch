@@ -1,8 +1,21 @@
 class User < ActiveRecord::Base
-  acts_as_token_authenticatable
+  has_secure_password
+  has_many :lists, dependent: :destroy
+  before_create :generate_auth_token
 
-  # Include default devise modules. Others available are:
-  # :confirmable, :lockable, :timeoutable and :omniauthable
-  devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :trackable, :validatable
+  validates :email, presence: true
+
+  def self.authenticate(email, password)
+    user = User.find_by(email: email)
+    user && user.authenticate(password)
+  end
+
+  private
+
+  def generate_auth_token
+    self.authentication_token = SecureRandom.hex(10)
+    # begin
+    #   self.authentication_token = SecureRandom.hex
+    # end while self.class.exists?(access_token: access_token)
+  end
 end
