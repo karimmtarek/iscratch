@@ -1,10 +1,11 @@
 module API
   module V1
     class ItemsController < ApplicationController
+      before_action :authenticate
+
       def index
         @items = Item.all
-
-        respond_with(@items)
+        render json: @items.to_json, status: :ok
       end
 
       # def new

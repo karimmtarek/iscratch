@@ -3,7 +3,9 @@ class User < ActiveRecord::Base
   has_many :lists, dependent: :destroy
   before_create :generate_auth_token
 
-  validates :email, presence: true
+  validates :email, presence: true,
+                    uniqueness: {case_sensitive: false},
+                    format: /\A\S+@\S+\z/
 
   def self.authenticate(email, password)
     user = User.find_by(email: email)

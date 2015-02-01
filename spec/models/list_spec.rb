@@ -2,7 +2,8 @@ require 'rails_helper'
 
 describe 'List' do
 
-  let(:list) { FactoryGirl.create(:list) }
+  let(:user) { FactoryGirl.create(:user) }
+  let(:list) { user.lists.create(name: 'new todo list') }
 
   it "a new one can be created, with valid params" do
     list.save
@@ -10,19 +11,18 @@ describe 'List' do
   end
 
   it "can't be created if list name exists" do
-    list2 = List.new(name: list.name)
+    list2 = user.lists.new(name: list.name)
     expect(list2.valid?).to be_falsy
   end
 
   it "can't be created, with invalid params" do
-    inv_list = List.new
-    inv_list.save
-    expect(List.all.size).to eq(0)
+    inv_list = user.lists.new
+    expect(inv_list.save).to be_falsy
   end
 
   it "can be deleted" do
     list.save
-    expect(List.all.size).to eq(1)
+    expect(user.lists.all.size).to eq(1)
 
     list.destroy
     expect(List.all.size).to eq(0)

@@ -5,21 +5,17 @@ module API
 
       def index
         @lists = List.all
-        respond_with(@lists)
+        render json: @lists.to_json, status: :ok
       end
-
-      # def new
-      #   @list = List.new
-      # end
 
       def create
         # binding.pry
-        @list = List.new(list_params)
+        @list = @current_user.lists.new(list_params)
 
         if @list.save
-          render text: @list.to_json, status: :created
+          render json: @list.to_json, status: :created
         else
-          render text: @list.errors.full_messages.to_json, status: :bad_request
+          render json: @list.errors.full_messages.to_json, status: :bad_request
         end
       end
 
@@ -29,11 +25,7 @@ module API
         params.require(:list).permit(:name, :permission)
       end
 
-      def authenticate
-        authenticate_or_request_with_http_token do |token, options|
-          User.exists?(authentication_token: token)
-        end
-      end
+
 
     end
   end
