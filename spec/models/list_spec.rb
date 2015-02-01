@@ -42,4 +42,20 @@ describe 'List' do
     expect(list.save).to be_falsy
   end
 
+  it "can change permission within allowed permissions" do
+    list.permission = 'private'
+    expect(list.save).to eq true
+
+    list.permission = 'viewable'
+    expect(list.save).to eq true
+
+    list.permission = 'public'
+    expect(list.save).to eq true
+  end
+
+  it "can't change permission with out allowed permissions" do
+    list.permission = 'open'
+    expect(list.save).to be_falsy
+  end
+
 end
