@@ -14,6 +14,7 @@ gem 'bcrypt', '~> 3.1.7'
 
 gem 'pry-rails'
 
+gem 'simplecov', :require => false, :group => :test
 gem 'rack-cors', :require => 'rack/cors'
 
 # gem 'devise'
