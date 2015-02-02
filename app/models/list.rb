@@ -13,10 +13,14 @@ class List < ActiveRecord::Base
   end
 
   def uniqueness_of_name
-      user = User.find(self.user_id)
-      if user.lists.where(name: self.name).exists?
-        errors.add(:name, "is already taken, be creative!") if self.new_record?
-      end
+    user = User.find(self.user_id)
+    if user.lists.where(name: self.name).exists?
+      errors.add(:name, "is already taken, be creative!") if self.new_record?
+    end
+  end
+
+  def self.view_all
+    where('permission != ?', 'private')
   end
 
   def public?

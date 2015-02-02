@@ -20,10 +20,9 @@ module API
         @user = User.new(user_params)
 
         if @user.save
-
-          render json: @user.authentication_token.to_json, status: :created
+          render json:  @user.authentication_token, status: :created
         else
-          render json: @user.errors.full_messages.to_json, status: :bad_request
+          render json: @user.errors.full_messages, status: :bad_request
         end
       end
 
