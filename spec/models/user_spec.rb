@@ -1,50 +1,13 @@
 require 'rails_helper'
 
 describe 'user' do
-  describe "authenticate?" do
+  describe "something" do
 
     let(:user) { FactoryGirl.build(:user, password: 'password') }
 
-    xit "tests for password parity" do
+    xit "something" do
       user.authenticate?('password').should be_true
       user.authenticate?('otherpass').should be_false
     end
   end
-
-  describe "can?" do
-
-    before do
-      @user = FactoryGirl.create(:user)
-      @list = FactoryGirl.create(:list, user: @user)
-    end
-
-    xit "allows owners to do whatever they want" do
-      @list.user.should be @user
-      [:view, :edit].each { |action|
-        @user.can?(action, @list).should be_true
-      }
-    end
-
-    xit "toggles abilities by permissions" do
-      user2 = FactoryGirl.create(:user)
-      @list.user.should_not be user2
-      @list.permissions.should == 'private'
-
-      [:view, :edit].all?{ |action|
-        user2.can?(action, @list)
-      }.should be_false
-
-      @list.permissions = 'visible'
-
-      user2.can?(:view, @list).should be_true
-      user2.can?(:edit, @list).should be_false
-
-      @list.permissions = 'open'
-
-      [:view, :edit].all?{ |action|
-        user2.can?(action, @list)
-      }.should be_true
-    end
-  end
-
 end
