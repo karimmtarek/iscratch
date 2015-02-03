@@ -1,8 +1,7 @@
 module API
   module V1
     class UsersController < ApplicationController
-      # before_action :require_signin, except: [:new, :create]
-      # before_action :require_correct_user, only: [:edit, :update, :destroy]
+      before_action :authenticate, only: [:destroy]
 
       # def index
       #   redirect_to user_path(current_user)
@@ -20,10 +19,22 @@ module API
         @user = User.new(user_params)
 
         if @user.save
-          render json:  @user.authentication_token, status: :created
+          render json: "Token: #{@user.authentication_token}", status: :created
         else
-          render json: @user.errors.full_messages, status: :bad_request
+          render json: "Error: #{@user.errors.full_messages}", status: :bad_request
         end
+      end
+
+      def destroy
+        @user = @current_user
+        # binding.pry
+        if account_owner?(@user)
+          @user.destroy
+          render json: 'Message: User succsessfully deleted.', status: :ok
+        else
+          render json: "You don't have permission to delete this user.", status: :unauthorized
+        end
+
       end
 
       # def edit
@@ -43,6 +54,10 @@ module API
 
       def user_params
         params.require(:user).permit(:email, :password, :password_confirmation)
+      end
+
+      def account_owner?(user)
+        params[:id].to_i == user.id
       end
     end
   end

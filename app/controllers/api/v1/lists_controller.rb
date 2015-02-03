@@ -50,11 +50,17 @@ module API
       def destroy
         @list = List.find(params[:id])
 
-        if @list.destroy
-          render json: "List: #{@list.name}, is gone!", status: :ok
+        if other_users_viewable?(@list, @current_user) || other_users_private?(@list, @current_user)
+          render json: "Error: You don't have permission to delete this list", status: :unauthorized
         else
-          render json: "Error: #{@list.errors.full_messages}", status: :bad_request
+          if @list.destroy
+            render json: "List: #{@list.name}, is gone!", status: :ok
+          else
+            render json: "Error: #{@list.errors.full_messages}", status: :bad_request
+          end
         end
+
+
 
       end
 

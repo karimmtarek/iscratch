@@ -42,15 +42,30 @@ describe API::V1::ListsController do
   describe "destroy" do
     context "with correct user's token auth" do
       before do
-        user = User.create!(email: 'karim@tarek.com', password: 'password')
-        @request.env["HTTP_AUTHORIZATION"] = "Token token=#{user.authentication_token}"
+        @user = User.create!(email: 'karim@tarek.com', password: 'password')
+        @request.env["HTTP_AUTHORIZATION"] = "Token token=#{@user.authentication_token}"
       end
       it "can be deleted" do
-        List.create!(name: 'my lovely list', user_id: 1)
-        # update_params = {id: 1, list: { permission: 'private', user_id: 1}}
+        @user.lists.create!(name: 'my lovely list', user_id: 1)
         delete :destroy, id: 1
 
         expect(response.status).to eq 200
+      end
+
+      it "can't be deleted if permission is viewable or private and belongs to another user" do
+        user_2 = User.create!(email: 'karim@gmail.com', password: 'password')
+        list_viewable = user_2.lists.create!(name: 'new todo list_viewable', permission: 'viewable')
+        list_private = user_2.lists.create!(name: 'new todo list_private', permission: 'private')
+
+        delete :destroy, id: list_viewable.id
+
+        expect(response.status).to eq 401
+        expect(response.body).to include("You don't have permission to delete this list")
+
+        delete :destroy, id: list_private.id
+
+        expect(response.status).to eq 401
+        expect(response.body).to include("You don't have permission to delete this list")
       end
     end
   end
