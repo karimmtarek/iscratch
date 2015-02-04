@@ -188,7 +188,9 @@ describe API::V1::ListsController do
         get :view_all
 
         expect(response.status).to eq 200
-        expect(response.body).to eq([list_viewable, list_public].to_json)
+        expect(response.body).to include(list_viewable.name.to_json)
+        expect(response.body).to include(list_public.name.to_json)
+        expect(response.body).not_to include(list_private.name.to_json)
       end
 
     end

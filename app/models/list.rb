@@ -1,6 +1,7 @@
 class List < ActiveRecord::Base
   belongs_to :user
   has_many :items, dependent: :destroy
+  after_initialize :default_permission
   validates :name, presence: true
   validate :uniqueness_of_name
 
@@ -8,8 +9,9 @@ class List < ActiveRecord::Base
   validates :permission, inclusion: {in: PERMISSION_OPTIONS}
 
   # set :permission to public by default when creating a new list
-  def permission
-    self[:permission] || "public"
+  def default_permission
+    # self[:permission] || "public"
+    self.permission ||= "public"
   end
 
   def uniqueness_of_name
@@ -23,12 +25,4 @@ class List < ActiveRecord::Base
     where('permission != ?', 'private')
   end
 
-  def public?
-  end
-
-  def viewable?
-  end
-
-  def private?
-  end
 end

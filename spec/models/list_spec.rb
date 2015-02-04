@@ -58,4 +58,14 @@ describe 'List' do
     expect(list.save).to be_falsy
   end
 
+  it "returns permission when available" do
+    list = List.new(name: 'name', permission: 'private')
+    expect(list.permission).to eq('private')
+  end
+
+  it "it has a permission of 'public' if not available" do
+    list = List.new(name: 'name')
+    expect(list.permission).to eq('public')
+  end
+
 end

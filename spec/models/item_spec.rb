@@ -4,7 +4,9 @@ describe 'Item' do
   let(:item) { FactoryGirl.create(:item) }
 
   it "a new one can be created, with valid params" do
+    # item = Item.new(name: 'name', completed: false)
     item.save
+    expect(item.save).to eq true
     expect(Item.all.size).to eq(1)
   end
 
@@ -39,5 +41,15 @@ describe 'Item' do
     item.name = ''
 
     expect(item.save).to be_falsy
+  end
+
+  it "returns completed true when set to true" do
+    item = Item.new(name: 'name', completed: true)
+    expect(item.completed).to eq(true)
+  end
+
+  it "completed is false if not set" do
+    item = Item.create!(name: 'name')
+    expect(item.completed).to eq(false)
   end
 end
