@@ -46,7 +46,8 @@ describe API::V1::ListsController do
         @request.env["HTTP_AUTHORIZATION"] = "Token token=#{@user.authentication_token}"
       end
       it "can be deleted" do
-        @user.lists.create!(name: 'my lovely list', user_id: 1)
+        @user.lists.create!(name: 'my lovely list')
+        # binding.pry
         delete :destroy, id: 1
 
         expect(response.status).to eq 200
@@ -78,10 +79,11 @@ describe API::V1::ListsController do
       end
       it "can change permission within allowed permissions" do
         List.create!(name: 'my lovely list', user_id: 1)
-        update_params = {id: 1, list: { permission: 'private', user_id: 1}}
+        update_params = {id: 1, list: { permission: 'private'}}
         put :update, update_params
 
-        expect(response.status).to eq 200
+        # expect(response.status).to eq 200
+        expect(response.body).to include('private')
       end
 
       it "can edit public lists that belongs to any user" do

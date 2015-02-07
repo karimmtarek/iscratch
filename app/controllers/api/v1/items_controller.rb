@@ -9,7 +9,7 @@ module API
       end
 
       def create
-        @list = List.find(params[:list_id])
+        @list = @current_user.lists.find(params[:list_id])
         @item = @list.items.new(item_params)
 
         if @item.save
@@ -20,29 +20,24 @@ module API
       end
 
       def update
-        @list = List.find(params[:list_id])
+        @list = @current_user.lists.find(params[:list_id])
         @item = @list.items.find(params[:id])
 
         if @item.update(item_params)
-          if @item.completed == true
-            @item.destroy
-            render json: 'Message: Item marked as completed and removed.', status: :ok
-          else
-            render json: 'Message: Item updated succssufully.', status: :ok
-          end
+          render json: 'Message: Item updated succssufully.', status: :ok
+        else
+          render json: "Error: #{@item.errors.full_messages}", status: :bad_request
         end
 
-        # if params[:completed] != true || params[:completed] != false
-        #   render json: "Error: #{@item.errors.full_messages}", status: :bad_request
+        # if params[:completed].present?
+        #   if params[:completed] != true || params[:completed] != false
+        #     render json: "Error: #{@item.errors.full_messages}", status: :bad_request
+        #   end
         # end
-
-
-
-
       end
 
       def destroy
-        @list = List.find(params[:list_id])
+        @list = @current_user.lists.find(params[:list_id])
         @item = @list.items.find(params[:id])
 
         @item.destroy

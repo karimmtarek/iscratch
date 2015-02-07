@@ -39,29 +39,6 @@ describe API::V1::ItemsController do
       expect(response.body).to include('Item updated succssufully')
     end
 
-    it "deletes the item if marked completed" do
-      list = @user.lists.create!(name: 'just another list')
-      item = list.items.create!(name:'one new item')
-      update_params = { id: item.id, list_id: list.id, item: { completed: true} }
-
-      put :update, update_params
-
-      expect(list.items.size).to eq 0
-      expect(response.status).to eq 200
-      expect(response.body).to include('Item marked as completed and removed')
-    end
-
-    xit "throws an error if update params invalid" do
-      list = @user.lists.create!(name: 'just another list')
-      item = list.items.create!(name:'one new item')
-      update_params = { id: item.id, list_id: list.id, item: { completed: 'whatever'} }
-
-      put :update, update_params
-      # binding.pry
-
-      expect(response.status).to eq 400
-      expect(response.body).to include("Error: #{item.errors.full_messages}")
-    end
   end
 
   describe "destroy" do

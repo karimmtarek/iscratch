@@ -15,7 +15,7 @@ module API
 
       def show
         @list = List.find(params[:id])
-        if other_users_private?(@list, @current_user)
+        if @list.other_users_private?(@current_user)
           render json: [Error: 'This list is private.'], status: :unauthorized
         else
           render json: @list, status: :ok
@@ -35,32 +35,27 @@ module API
       def update
         @list = List.find(params[:id])
 
-        if other_users_viewable?(@list, @current_user) || other_users_private?(@list, @current_user)
-          render json: "Error: You don't have permission to edit this list", status: :unauthorized
+        return render(json: "Error: You don't have permission to edit this list", status: :unauthorized) if @list.no_permission?(@current_user)
+
+        if @list.update(list_params)
+          render json: @list, status: :ok
         else
-          if @list.update(list_params)
-            render json: @list, status: :ok
-          else
-            render json: "Error: #{@list.errors.full_messages}", status: :bad_request
-          end
+          render json: "Error: #{@list.errors.full_messages}", status: :bad_request
         end
+
 
       end
 
       def destroy
         @list = List.find(params[:id])
 
-        if other_users_viewable?(@list, @current_user) || other_users_private?(@list, @current_user)
-          render json: "Error: You don't have permission to delete this list", status: :unauthorized
+        return render json: "Error: You don't have permission to delete this list", status: :unauthorized if @list.no_permission?(@current_user)
+
+        if @list.destroy
+          render json: "List: #{@list.name}, is gone!", status: :ok
         else
-          if @list.destroy
-            render json: "List: #{@list.name}, is gone!", status: :ok
-          else
-            render json: "Error: #{@list.errors.full_messages}", status: :bad_request
-          end
+          render json: "Error: #{@list.errors.full_messages}", status: :bad_request
         end
-
-
 
       end
 
@@ -68,14 +63,6 @@ module API
 
       def list_params
         params.require(:list).permit(:name, :permission)
-      end
-
-      def other_users_private?(list, user)
-        list.permission == 'private' && user.id != list.user_id
-      end
-
-      def other_users_viewable?(list, user)
-        list.permission == 'viewable' && user.id != list.user_id
       end
 
     end
