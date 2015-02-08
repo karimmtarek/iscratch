@@ -28,12 +28,6 @@ module API
         else
           render json: "Error: #{@item.errors.full_messages}", status: :bad_request
         end
-
-        # if params[:completed].present?
-        #   if params[:completed] != true || params[:completed] != false
-        #     render json: "Error: #{@item.errors.full_messages}", status: :bad_request
-        #   end
-        # end
       end
 
       def destroy

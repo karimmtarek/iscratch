@@ -3,18 +3,6 @@ module API
     class UsersController < ApplicationController
       before_action :authenticate, only: [:destroy]
 
-      # def index
-      #   redirect_to user_path(current_user)
-      # end
-
-      # def show
-      #   @user = User.find(params[:id])
-      # end
-
-      # def new
-      #   @user = User.new
-      # end
-
       def create
         @user = User.new(user_params)
 
@@ -27,7 +15,6 @@ module API
 
       def destroy
         @user = @current_user
-        # binding.pry
         if account_owner?(@user)
           @user.destroy
           render json: 'Message: User succsessfully deleted.', status: :ok
@@ -36,19 +23,6 @@ module API
         end
 
       end
-
-      # def edit
-      #   @user = User.find(params[:id])
-      # end
-
-      # def update
-      #   @user = User.find(params[:id])
-      #   if @user.update(user_params)
-      #     redirect_to dashboard_path
-      #   else
-      #     render :edit
-      #   end
-      # end
 
     private
 
