@@ -10,11 +10,9 @@ class User < ActiveRecord::Base
   private
 
   def generate_auth_token
-    generated_token = SecureRandom.hex(12)
-
-    while User.where(authentication_token: generated_token).exists?
+    begin
       generated_token = SecureRandom.hex(12)
-    end
+    end while User.where(authentication_token: generated_token).exists?
 
     self.authentication_token = generated_token
   end
