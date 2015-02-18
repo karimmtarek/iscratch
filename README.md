@@ -29,29 +29,43 @@ A simple API that any programmer can easily navigate and extend. Can be interact
 
 ### How to test drive the API in your terminal using Curl
 #####Create new user
+```
 curl -d "user[email]=user@example.com" -d "user[password]=password" http://localhost:3000/v1/users
-
+```
 > If entered a valid email/password combination you'll get a token, you need to use this token in any other operation to authinticate the request.
 
 #####Create new todo list
+```
 curl -H 'Authorization: Token token="d5384770d8b7f5aaadfbbcb3"' -d "list[name]=my first todo list" -d "list[permission]=private" http://localhost:3000/v1/lists
+```
 
 > make sure the the token is surrounded with "double quotes"
 
 #####Update todo list
+```
 curl -H 'Authorization: Token token="d5384770d8b7f5aaadfbbcb3"' -d "list[name]=my first todo list - updated" -X PUT http://localhost:3000/v1/lists/1
+```
 
 #####Create new todo item
+```
 curl -H 'Authorization: Token token="d5384770d8b7f5aaadfbbcb3"' -d "item[name]=my first todo item" http://localhost:3000/v1/lists/1/items
+```
 
 #####Update todo item
+```
 curl -H 'Authorization: Token token="d5384770d8b7f5aaadfbbcb3"' -d "item[name]=my first todo item - updated" -X PUT http://localhost:3000/v1/lists/1/items/1
+```
 
 #####Delete todo item
+```
 curl -H 'Authorization: Token token="d5384770d8b7f5aaadfbbcb3"' -X DELETE http://localhost:3000/v1/lists/1/items/1
-
+```
 #####Delete todo list
+```
 curl -H 'Authorization: Token token="d5384770d8b7f5aaadfbbcb3"' -X DELETE http://localhost:3000/v1/lists/1
+```
 
 #####Delete user
+```
 curl -H 'Authorization: Token token="d5384770d8b7f5aaadfbbcb3"' -X DELETE http://localhost:3000/v1/users/1
+```
