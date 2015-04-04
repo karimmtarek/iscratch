@@ -1,4 +1,4 @@
-# TotoWiz API [![Build Status](https://travis-ci.org/karimmtarek/todo-wiz.svg?branch=master)](https://travis-ci.org/karimmtarek/todo-wiz)
+# TodoWiz API [![Build Status](https://travis-ci.org/karimmtarek/todo-wiz.svg?branch=master)](https://travis-ci.org/karimmtarek/todo-wiz)
 External Todo API with authentication.
 
 ### Use case
