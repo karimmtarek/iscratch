@@ -8,15 +8,9 @@ gem 'responders', '~> 2.0'
 # Use ActiveModel has_secure_password
 gem 'bcrypt', '~> 3.1.7'
 
-# To use Jbuilder templates for JSON
-# gem 'jbuilder'
-
 gem 'pry-rails'
 
 gem 'rack-cors', :require => 'rack/cors'
-
-# gem 'devise'
-# gem 'simple_token_authentication', '~> 1.0'
 
 group :development do
   gem 'thin'
@@ -41,12 +35,3 @@ group :production do
   gem 'rails_12factor'
   gem 'unicorn'
 end
-
-# To use ActiveModel has_secure_password
-# gem 'bcrypt', '~> 3.1.7'
-
-# Deploy with Capistrano
-# gem 'capistrano', :group => :development
-
-# To use debugger
-# gem 'ruby-debug19', :require => 'ruby-debug'
