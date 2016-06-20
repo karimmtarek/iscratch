@@ -19,13 +19,14 @@ A simple API that any programmer can easily navigate and extend. Can be interact
 12. As a user, I can't delete other users accounts.
 13. As a user, I want to be able to add and remove items from lists, using the command line.
 14. As a user, I want to be able to mark items as completed, using the command line.
+
 ### Setup
 1. Open your terminal, clone this repository `git clone git@github.com:karimmtarek/todo-wiz.git todowiz_api_testdrive`
 2. Change directory to todowiz application directory `cd todowiz_api_testdrive`
-3. Run `bundle install`
+3. Run `bundle install` (make sure you already have bundle installed by running `bundle -v`, if not run `gem install bundler`)
 4. Run `rake db:migrate`
 5. Run `rails server`
-6. You are good to go, follow the steps in 'How to use' for more information.
+6. You are good to go, follow the steps in __'How to test drive'__ for more information.
 
 ### How to test drive the API in your terminal using Curl
 #####Create new user
